@@ -39,7 +39,7 @@ const Sidebar = () => {
                         />
                         <span className="text-sm">Show online only</span>
                     </label>
-                    <span className="text-xs text-zinc-500">({onlineUsers.length} online)</span>
+                    <span className="text-xs text-zinc-500">({onlineUsers.length - 1} online)</span>
                 </div>
             </div>
 
@@ -63,7 +63,7 @@ const Sidebar = () => {
                             {onlineUsers.includes(user._id) && (
                                 <span
                                     className="absolute bottom-0 right-0 size-3 bg-green-500 
-                  rounded-full ring-2 ring-zinc-900"
+                                    rounded-full ring-2 ring-zinc-900"
                                 />
                             )}
                         </div>
