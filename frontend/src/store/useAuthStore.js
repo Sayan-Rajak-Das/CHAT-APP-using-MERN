@@ -8,7 +8,7 @@ const BASE_URL = "http://localhost:5001";
 const useAuthStore = create((set, get) => ({
     authUser: null,
     isSigningUp: false,
-    isLoggingIng: false,
+    isLoggingIn: false,
     isUpdatingProfile: false,
     isCheckingAuth: true,
     onlineUsers: [],
@@ -16,7 +16,16 @@ const useAuthStore = create((set, get) => ({
 
     checkAuth: async () => {
         try {
-            const res = await axiosInstance.get("/auth/check");
+            // Check if token exists 
+            // const token = document.cookie.includes("jwt"); 
+            // if (!token) {
+            //     set({ authUser: null });
+            //     return;
+            // }
+
+            const res = await axiosInstance.get("/auth/check", {
+                withCredentials: true, 
+            });
 
             set({ authUser: res.data });
             get().connectSocket();
@@ -37,7 +46,8 @@ const useAuthStore = create((set, get) => ({
             get().connectSocket();
 
         } catch (error) {
-            toast.error(error.response.data.message);
+            const errorMessage = error.response?.data?.message || "An error occurred. Please try again.";
+            toast.error(errorMessage);
         } finally {
             set({ isSigningUp: false });
         }
@@ -52,7 +62,8 @@ const useAuthStore = create((set, get) => ({
 
             get().connectSocket();
         } catch (error) {
-            toast.error(error.response.data.message);
+            const errorMessage = error.response?.data?.message || "An error occurred. Please try again.";
+            toast.error(errorMessage);
         } finally {
             set({ isLoggingIn: false });
         }
@@ -65,7 +76,8 @@ const useAuthStore = create((set, get) => ({
             toast.success("Logged out successfully");
             get().disconnectSocket();
         } catch (error) {
-            toast.error(error.response.data.message);
+            const errorMessage = error.response?.data?.message || "An error occurred. Please try again.";
+            toast.error(errorMessage);
         }
     },
 
@@ -77,7 +89,8 @@ const useAuthStore = create((set, get) => ({
             toast.success("Profile update successfully");
         } catch (error) {
             console.log("Error in updateProfile", error);
-            toast.error(error.response.data.message);
+            const errorMessage = error.response?.data?.message || "An error occurred. Please try again.";
+            toast.error(errorMessage);
         } finally {
             set({ isUpdatingProfile: false });
         }
