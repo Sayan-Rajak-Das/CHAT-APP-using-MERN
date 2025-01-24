@@ -11,7 +11,6 @@ const Sidebar = () => {
     const [showOnlineOnly, setShowOnlineOnly] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredUsers, setFilteredUsers] = useState([]);
-    const [isFocused, setIsFocused] = useState(false);
 
     useEffect(() => {
         getUsers();
@@ -40,7 +39,6 @@ const Sidebar = () => {
 
     const resetSearch = () => {
         setSearchQuery("");
-        setIsFocused(false);
     };
 
     if (isUsersLoading) return <SidebarSkeleton />;
@@ -57,15 +55,17 @@ const Sidebar = () => {
                 {/* Search Bar */}
                 <div
                     className={`mt-2 relative flex items-center rounded-md transition-all ${
-                        isFocused
+                        searchQuery.trim()
                             ? "border-2 border-gray-400 shadow-sm"
                             : "border border-gray-300"
                     }`}
                 >
-                    {!isFocused && !searchQuery && (
+                    {/* Show Search Icon only when the input is empty */}
+                    {!searchQuery.trim() && (
                         <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 size-4" />
                     )}
-                    {searchQuery && (
+                    {/* Show Arrow Icon only when there is text */}
+                    {searchQuery.trim() && (
                         <button
                             onClick={resetSearch}
                             className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500"
@@ -77,8 +77,6 @@ const Sidebar = () => {
                         type="text"
                         value={searchQuery}
                         onChange={handleSearchChange}
-                        onFocus={() => setIsFocused(true)}
-                        onBlur={() => !searchQuery && setIsFocused(false)}
                         placeholder="Search..."
                         className="input input-sm w-full pl-10 py-1.5 text-sm focus:outline-none border-none"
                     />
