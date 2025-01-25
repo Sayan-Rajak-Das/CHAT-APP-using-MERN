@@ -1,4 +1,4 @@
-# 📨 Chat App (MERN Stack)
+# 📨 Realtime Chat App (MERN Stack)
 
 Welcome to the **Chat App**, a real-time messaging application built using the **MERN stack** (MongoDB, Express.js, React, Node.js) with **Socket.IO** for real-time communication. This app features user authentication, profile updates, and live messaging, making it a great choice for chatting with friends and colleagues.
 
